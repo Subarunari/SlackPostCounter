@@ -1,0 +1,5 @@
+ID = "id"
+LATEST_TS = "latest_ts"
+NAME = "name"
+COUNT = "count"
+DATE = "date"

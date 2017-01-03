@@ -1,0 +1,5 @@
+slack:
+    token: # Please set slack API token 
+mongodb:
+    server: 'localhost'
+    port: 27017
