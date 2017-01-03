@@ -3,4 +3,4 @@ machine:
         version: 3.4.3
 test:
     override:
-        - python -m unittest test/*.py
+        - pytest test/*.py
