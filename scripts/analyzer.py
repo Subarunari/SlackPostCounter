@@ -1,7 +1,7 @@
 from collections import defaultdict
 from datetime import datetime
 
-from script import data_header_const
+from scripts import data_header_const
 
 DEFAULT_LATEST_TS = 0
 

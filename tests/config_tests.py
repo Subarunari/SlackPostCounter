@@ -1,6 +1,6 @@
 import unittest
 
-from script import config
+from scripts import config
 
 
 class TestArgument(unittest.TestCase):

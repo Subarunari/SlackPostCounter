@@ -3,8 +3,8 @@ from datetime import datetime
 from pymongo import MongoClient
 from pymongo.errors import ConnectionFailure
 
-from script import config
-from script import data_header_const
+from scripts import config
+from scripts import data_header_const
 
 
 def _client_setup():

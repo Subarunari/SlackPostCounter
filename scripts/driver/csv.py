@@ -1,7 +1,7 @@
 import csv
 import os
 
-from script import data_header_const
+from scripts import data_header_const
 
 RESULT_HEADER = {data_header_const.ID: "id", data_header_const.NAME: "name", data_header_const.COUNT: "count", data_header_const.DATE: "date"}
 RESULT_FILE_PATH = 'result.csv'

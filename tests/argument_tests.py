@@ -1,7 +1,7 @@
 import sys
 import unittest
 
-from script import argument
+from scripts import argument
 
 
 class TestArgument(unittest.TestCase):
