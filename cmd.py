@@ -1,4 +1,4 @@
-from script import core
+from scripts import core
 
 
 if __name__ == '__main__':

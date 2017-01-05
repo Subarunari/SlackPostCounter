@@ -3,9 +3,11 @@ import importlib
 from slacker import Slacker
 from slacker import Error as SlackError
 
-from script import analyzer
-from script import argument
-from script import config
+from scripts import analyzer
+from scripts import argument
+from scripts import config
+
+DRIVER_MODULE_DIR = 'scripts.driver.{}'
 
 
 def pre():
@@ -17,7 +19,7 @@ def pre():
 
 
 def main(driver_name):
-    driver_module = importlib.import_module('script.driver.{}'.format(driver_name))
+    driver_module = importlib.import_module(DRIVER_MODULE_DIR.format(driver_name))
     slack_client = Slacker(config.get_slack_token())
 
     try:
