@@ -3,3 +3,4 @@ slacker==0.9.29
 pymongo==3.4.0
 PyYAML==3.12
 pytest==3.0.5
+logbook=1.0.0
