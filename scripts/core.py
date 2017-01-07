@@ -2,12 +2,15 @@ import importlib
 
 from slacker import Slacker
 from slacker import Error as SlackError
+from logbook import Logger
 
 from scripts import analyzer
 from scripts import argument
 from scripts import config
+from scripts import logger
 
 DRIVER_MODULE_DIR = 'scripts.driver.{}'
+log = Logger(__name__)
 
 
 def pre():
@@ -15,6 +18,7 @@ def pre():
         print("config file not exist")
         exit()
 
+    logger.setup()
     return vars(argument.parse(argument.create())).get(argument.ARG_NAME)
 
 
@@ -25,6 +29,7 @@ def main(driver_name):
     try:
         response = slack_client.channels.list()
     except SlackError:
+        log.critical('fail to connect slack.')
         exit()
 
     if not response.body["ok"]:
@@ -35,3 +40,5 @@ def main(driver_name):
 
     driver_module.save_result(results)
     driver_module.save_latest_info(latest_infos)
+
+    log.info('finished collect the data.')
