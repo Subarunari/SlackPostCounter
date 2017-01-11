@@ -1,5 +1,6 @@
 # application ignore
 ./conf.yml
+./coverage_artifacts
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -4,3 +4,7 @@ machine:
 test:
     override:
         - pytest tests/*.py
+    post:
+        - python -m coverage run -m cmd
+        - python -m coverage html
+        - mv coverage_artifacts $CIRCLE_ARTIFACTS
