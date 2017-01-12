@@ -14,6 +14,7 @@ def setup():
         os.mkdir(LOG_FILE_DIR)
 
     handler = TimedRotatingFileHandler(
-            filename=LOG_FILE_PATH,
-            backup_count=config.get_logging_backup_count())
+        filename=LOG_FILE_PATH,
+        backup_count=config.get_logging_backup_count())
+
     handler.push_application()
