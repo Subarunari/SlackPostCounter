@@ -2,13 +2,11 @@ machine:
     python:
         version: 3.4.3
 test:
-    pre:
-        - python -m conerage erase
     override:
         - pytest tests/*.py
     post:
         - python -m coverage run -m cmd
         - python -m coverage html
         - mv coverage_artifacts $CIRCLE_ARTIFACTS/coverage_artifacts
-        - flake8
+        - flake8 --output-file=flake8_artifacts.txt
         - mv flake8_artifacts.txt $CIRCLE_ARTIFACTS/

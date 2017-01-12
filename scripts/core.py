@@ -15,7 +15,7 @@ log = Logger(__name__)
 
 def pre():
     if not config.exists_config_file():
-        print("config file not exist")
+        log.critical("config file not exist")
         exit()
 
     logger.setup()

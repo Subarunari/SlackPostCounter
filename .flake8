@@ -1,3 +1,2 @@
 [flake8]
 ignore = E501
-output-file = flake8_artifacts.txt
