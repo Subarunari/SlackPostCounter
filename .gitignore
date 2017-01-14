@@ -1,5 +1,7 @@
 # application ignore
 ./conf.yml
+./coverage_artifacts
+import-order-style = pep8
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

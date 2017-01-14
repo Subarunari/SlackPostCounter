@@ -1,13 +1,12 @@
 from collections import defaultdict
 from datetime import datetime
 
+from logbook import Logger
+
 from scripts import data_header_const
 
 DEFAULT_LATEST_TS = 0
-
-
-def get_latest_ts(latest_ts):
-    return latest_ts if latest_ts == "0" else float(latest_ts)
+log = Logger(__name__)
 
 
 def get_message_count(response, slack_client, now_latest_infos):
@@ -15,15 +14,11 @@ def get_message_count(response, slack_client, now_latest_infos):
     latest_info = []
 
     for channel in response.body["channels"]:
-        latest_ts = DEFAULT_LATEST_TS
-
-        for now_latest in now_latest_infos:
-            if now_latest["id"] == channel["id"]:
-                latest_ts = get_latest_ts(now_latest["latest_ts"])
+        latest_ts = get_latest_ts(now_latest_infos, channel["id"])
 
         saving_latest_ts = latest_ts
         ts_offset = datetime.now().timestamp()
-        result_per_day = _get_message_count(slack_client, channel, saving_latest_ts, latest_ts, ts_offset)
+        result_per_day, saving_latest_ts = _get_message_count(slack_client, channel, saving_latest_ts, latest_ts, ts_offset)
 
         for key, value in result_per_day.items():
             results.append({data_header_const.ID: channel["id"], data_header_const.NAME: channel["name"], data_header_const.COUNT: value, data_header_const.DATE: key})
@@ -31,9 +26,19 @@ def get_message_count(response, slack_client, now_latest_infos):
         latest_info.append({data_header_const.ID: channel["id"], data_header_const.LATEST_TS: saving_latest_ts})
 
     if len(results) == 0:
-        print("Nothing new data")
+        log.info("Nothing new message.")
 
     return results, latest_info
+
+
+def get_latest_ts(now_latest_infos, channel_id):
+    latest_ts = DEFAULT_LATEST_TS
+    for now_latest in now_latest_infos:
+        if now_latest["id"] == channel_id and now_latest["latest_ts"] != '0':
+            latest_ts = float(now_latest["latest_ts"])
+            break
+
+    return latest_ts
 
 
 def _get_message_count(slack_client, channel, saving_latest_ts, latest_ts, ts_offset):
@@ -55,4 +60,4 @@ def _get_message_count(slack_client, channel, saving_latest_ts, latest_ts, ts_of
 
         has_more = histories.body["has_more"]
 
-    return result_per_day
+    return result_per_day, saving_latest_ts

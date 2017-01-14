@@ -2,9 +2,12 @@ from datetime import datetime
 
 from pymongo import MongoClient
 from pymongo.errors import ConnectionFailure
+from logbook import Logger
 
 from scripts import config
 from scripts import data_header_const
+
+log = Logger(__name__)
 
 
 def _client_setup():
@@ -12,8 +15,8 @@ def _client_setup():
     mongo_client = MongoClient(mongodb_conf.get("server"), mongodb_conf.get("port"))
     try:
         mongo_client.server_info()
-    except ConnectionFailure:
-        print("Error")
+    except ConnectionFailure as error:
+        log.critical("Mongodb exception occured: {0}".format(error))
         exit()
 
     db = mongo_client["slackUsageChecker"]

@@ -1,6 +1,8 @@
 import os
+import sys
 
 from logbook import TimedRotatingFileHandler
+from logbook import StreamHandler
 
 from scripts import config
 
@@ -13,7 +15,12 @@ def setup():
     if not os.path.exists(LOG_FILE_DIR):
         os.mkdir(LOG_FILE_DIR)
 
-    handler = TimedRotatingFileHandler(
-            filename=LOG_FILE_PATH,
-            backup_count=config.get_logging_backup_count())
-    handler.push_application()
+    file_handler = TimedRotatingFileHandler(
+        filename=LOG_FILE_PATH,
+        backup_count=config.get_logging_backup_count())
+
+    stream_handler = StreamHandler(sys.stdout, level='CRITICAL')
+    stream_handler.format_string = '{record.level_name}: {record.channel}: {record.message}'
+
+    file_handler.push_application()
+    stream_handler.push_application()
