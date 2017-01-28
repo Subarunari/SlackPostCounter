@@ -11,4 +11,4 @@ test:
         - flake8 --output-file=flake8_artifacts.txt
         - mv flake8_artifacts.txt $CIRCLE_ARTIFACTS/
         - bandit -r scripts/ -f html -o bandit_artifacts.html
-        - mv bandit_artifacts.txt $CIRCLE_ARTIFACTS/
+        - mv bandit_artifacts.html $CIRCLE_ARTIFACTS/
